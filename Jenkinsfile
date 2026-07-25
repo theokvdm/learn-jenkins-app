@@ -17,5 +17,19 @@ pipeline {
                     '''
                     }
         }
+        stage('test') {
+            agent {
+                docker {
+                    image 'node:26-slim'
+                    reuseNode true
+                }
+            }
+            steps {
+                echo 'testing...'
+                sh '''
+                    sh 'test -f build/index.html'
+                    '''
+            }
+        }
     }
 }
